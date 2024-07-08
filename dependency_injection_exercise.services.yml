@@ -1,0 +1,16 @@
+services:
+  dependency_injection_exercise.custom_service:
+    class: Drupal\dependency_injection_exercise\CustomService
+    arguments: ['@http_client']
+
+  dependency_injection_exercise.breadcrumb:
+    class: Drupal\dependency_injection_exercise\CustomBreadcrumbBuilder
+    tags:
+      - { name: breadcrumb_builder, priority: 1000 }
+
+  dependency_injection_exercise.custom_language_manager:
+    class: Drupal\dependency_injection_exercise\CustomLanguageManager
+    decorates: language_manager
+    arguments: [ '@dependency_injection_exercise.custom_language_manager.inner', '@language.default' ]
+    tags:
+      - { name: language_manager }
